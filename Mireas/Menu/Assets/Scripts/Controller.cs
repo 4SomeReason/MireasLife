@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    public float speed = 250.0f;
+    public float speed = 300.0f;
     private Rigidbody2D _body;
 
     void Start()
