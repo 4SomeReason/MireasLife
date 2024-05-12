@@ -11,7 +11,7 @@ public class SaveButtonHandler : MonoBehaviour
     public void OnSaveButtonClick()
     {
         GameManager.instance.SaveGame();
-        Debug.Log("Что-то");
+        Debug.Log("Что-то сохраняет");
     }
 }
 

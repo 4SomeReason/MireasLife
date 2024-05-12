@@ -59,6 +59,12 @@ public class GameManager : MonoBehaviour
             currentNodeId = data.currentNodeId;
             LoadNode(currentNodeId);
         }
+        else
+        {
+            // Обработка случая, когда нет сохраненных данных, загружаем начальный узел
+            currentNodeId = 0;
+            LoadNode(currentNodeId);
+        }
     }
 
     void LoadNode(int nodeId)
