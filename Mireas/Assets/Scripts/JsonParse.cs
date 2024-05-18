@@ -26,7 +26,7 @@ public class JsonParse : MonoBehaviour
         public List<Node> nodes = new List<Node>();
         public List<Link> links = new List<Link>();
 
-        public (string, string) ReturnNode(int id) => (nodes[id].text, nodes[id].image);
+        public (string, string) ReturnNode(int id) => (nodes[id-1].text, nodes[id-1].image);
     }
 
 
@@ -37,8 +37,8 @@ public class JsonParse : MonoBehaviour
         JsonData data = JsonConvert.DeserializeObject<JsonData>(json);
         sr.Close();
 
-        Debug.Log(data.ReturnNode(0).Item1);
-        Debug.Log(data.ReturnNode(0).Item2);
+        Debug.Log(data.ReturnNode(1).Item1);
+        Debug.Log(data.ReturnNode(1).Item2);
         Debug.Log(data.nodes.Count);
 
     }
