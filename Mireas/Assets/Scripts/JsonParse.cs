@@ -40,7 +40,10 @@ public class JsonParse : MonoBehaviour
         Debug.Log(data.ReturnNode(1).Item1);
         Debug.Log(data.ReturnNode(1).Item2);
         Debug.Log(data.nodes.Count);
-
+        foreach(Node n in data.nodes)
+        {
+            Debug.Log(n.text);
+        }
     }
 
     // Update is called once per frame
