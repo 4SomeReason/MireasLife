@@ -12,17 +12,17 @@ public class Dialogs : MonoBehaviour
 {
     public JsonParse.JsonData jp;
     public TextMeshProUGUI textComponent;
-    public List<string> lines;
+    public string[] lines;
     public float textSpeed;
     private int index;
     void Start()
     {
-        //lines = new List<string>();
+        lines = new string[105];
         jp = GameObject.FindGameObjectWithTag("JsonParse").GetComponent<JsonParse>().data;
         textComponent.text = string.Empty;
-        for (int i = 1; i <= jp.nodes.Count; i++)
+        for (int i = 1; i <= 105; i++)
         {
-            lines[i - 1] = jp.ReturnNode(i).Item1;
+            lines[i-1] = jp.ReturnNode(i).Item1;
         }
         StartDialogue();
     }
@@ -53,7 +53,7 @@ public class Dialogs : MonoBehaviour
     }
     void NextLine()
     {
-        if (index < lines.Count - 1)
+        if (index < lines.Length - 1)
         {
             index++;
             textComponent.text = string.Empty;

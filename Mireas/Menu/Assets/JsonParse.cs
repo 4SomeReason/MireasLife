@@ -29,7 +29,7 @@ public class JsonParse : MonoBehaviour
     public JsonData data;
     void Awake()
     {
-        using StreamReader sr = new StreamReader("test.json");
+        using StreamReader sr = new StreamReader("GameJSON.json");
         string json = sr.ReadToEnd();
         data = JsonConvert.DeserializeObject<JsonData>(json);
         sr.Close();
