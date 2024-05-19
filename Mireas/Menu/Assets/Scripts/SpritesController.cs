@@ -1,56 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using System.IO;
 
 public class SpritesController : MonoBehaviour
 {
-    //public Sprite[] sprites; // Массив спрайтов для переключения
-    //private int currentSpriteIndex = 0;
-    //private SpriteRenderer spriteRenderer;
-
-    //void Start()
-    //{
-    //    spriteRenderer = GetComponent<SpriteRenderer>();
-    //    if (spriteRenderer == null)
-    //    {
-    //        Debug.LogError("SpriteRenderer не найден на объекте!");
-    //    }
-    //    UpdateSprite();
-    //}
-
-    //void Update()
-    //{
-    //    // Пример: переключение спрайтов по нажатию клавиши "Пробел"
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        currentSpriteIndex = (currentSpriteIndex + 1) % sprites.Length;
-    //        UpdateSprite();
-    //    }
-    //}
-
-    //void UpdateSprite()
-    //{
-    //    if (sprites.Length > 0 && currentSpriteIndex < sprites.Length)
-    //    {
-    //        spriteRenderer.sprite = sprites[currentSpriteIndex];
-    //    }
-    //}
-
-    public bool isSwitched = false;
-    public Image background1;
-    public Image background2;
-
-    public void SwitchImage(Sprite sprite)
+    public JsonParse.JsonData jp;
+    public string[] sprites;
+    private int currentSpriteIndex = 0;
+    private Image spriteRenderer;
+    void Start()
     {
-        if (!isSwitched) 
-        { 
-            background2.sprite = sprite;
-        }
-        else
+        sprites = new string[105];
+        jp = GameObject.FindGameObjectWithTag("JsonParse").GetComponent<JsonParse>().data;
+        for (int i = 1; i <= 105; i++)
         {
-            background1.sprite = sprite;
+            sprites[i - 1] = jp.ReturnNode(i).Item2;
         }
-        isSwitched = !isSwitched;
+        spriteRenderer = GetComponent<Image>();
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer не найден на объекте!");
+        }
+        UpdateSprite();
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            currentSpriteIndex = (currentSpriteIndex + 1) % sprites.Length;
+            UpdateSprite();
+        }
+    }
+
+    void UpdateSprite()
+    {
+        if (sprites.Length > 0 && currentSpriteIndex < sprites.Length)
+        {
+            if (File.Exists("Assets/Resources/" + sprites[currentSpriteIndex] + ".jpeg"))
+            {
+                Texture2D texture = Resources.Load<Texture2D>(sprites[currentSpriteIndex]);
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                spriteRenderer.sprite = sprite;
+            }
+        }
     }
 }

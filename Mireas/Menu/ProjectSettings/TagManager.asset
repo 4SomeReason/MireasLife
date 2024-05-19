@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DialogueBox
   - JsonParse
+  - BG
   layers:
   - Default
   - TransparentFX

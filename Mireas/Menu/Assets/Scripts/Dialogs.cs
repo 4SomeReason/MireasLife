@@ -10,37 +10,51 @@ using UnityEngine.SceneManagement;
 
 public class Dialogs : MonoBehaviour
 {
+    bool isTextDisplaying = false;
     public JsonParse.JsonData jp;
     public TextMeshProUGUI textComponent;
     public string[] lines;
     public float textSpeed;
+    private float displaySpeed = 1f;
     private int index;
+    IEnumerator DisplayText()
+    {
+        yield return new WaitForSeconds(displaySpeed);
+        isTextDisplaying = false;
+    }
+    void StartDisplayText()
+    {
+        isTextDisplaying = true;
+        StartCoroutine(DisplayText());
+    }
     void Start()
     {
         lines = new string[105];
         jp = GameObject.FindGameObjectWithTag("JsonParse").GetComponent<JsonParse>().data;
         textComponent.text = string.Empty;
-        for (int i = 1; i <= 105; i++)
-        {
-            lines[i-1] = jp.ReturnNode(i).Item1;
-        }
+        for (int i = 1; i <= 105; i++) { lines[i-1] = jp.ReturnNode(i).Item1; }
         StartDialogue();
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!isTextDisplaying) 
         {
-            if (textComponent.text == lines[index]) { NextLine(); }
-            else
+            if (Input.GetMouseButtonDown(0))
             {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
+                if (textComponent.text == lines[index]) { NextLine(); }
+                else
+                {
+                    StopAllCoroutines();
+                    textComponent.text = lines[index];
+                }
             }
-        }
+        }        
     }
     void StartDialogue()
     {
+        isTextDisplaying = true;
         index = 0;
+        StartDisplayText();
         StartCoroutine(TypeLine());
     }
     IEnumerator TypeLine()
@@ -49,6 +63,7 @@ public class Dialogs : MonoBehaviour
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
+            isTextDisplaying = false;
         }
     }
     void NextLine()

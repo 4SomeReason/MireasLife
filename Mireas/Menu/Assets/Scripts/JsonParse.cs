@@ -33,9 +33,6 @@ public class JsonParse : MonoBehaviour
         string json = sr.ReadToEnd();
         data = JsonConvert.DeserializeObject<JsonData>(json);
         sr.Close();
-        Debug.Log(data.ReturnNode(1).Item1);
-        Debug.Log(data.ReturnNode(1).Item2);
-        Debug.Log(data.nodes.Count);
     }
     void Update() { }
 }
