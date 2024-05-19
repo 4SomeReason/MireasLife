@@ -1,32 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting.FullSerializer;
+using UnityEngine.UIElements;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
-public class Dialogue : MonoBehaviour
+public class Dialogs : MonoBehaviour
 {
+    public JsonParse.JsonData jp;
     public TextMeshProUGUI textComponent;
-    public string[] lines;
+    public List<string> lines;
     public float textSpeed;
-
     private int index;
-
-    // Start is called before the first frame update
     void Start()
     {
+        //lines = new List<string>();
+        jp = GameObject.FindGameObjectWithTag("JsonParse").GetComponent<JsonParse>().data;
         textComponent.text = string.Empty;
+        for (int i = 1; i <= jp.nodes.Count; i++)
+        {
+            lines[i - 1] = jp.ReturnNode(i).Item1;
+        }
         StartDialogue();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
+            if (textComponent.text == lines[index]) { NextLine(); }
             else
             {
                 StopAllCoroutines();
@@ -34,13 +38,11 @@ public class Dialogue : MonoBehaviour
             }
         }
     }
-
     void StartDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());
     }
-
     IEnumerator TypeLine()
     {
         foreach (char c in lines[index].ToCharArray())
@@ -49,18 +51,14 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
     }
-
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (index < lines.Count - 1)
         {
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         }
-        else
-        {
-            gameObject.SetActive(false);
-        }
+        else { gameObject.SetActive(false); }
     }
 }
