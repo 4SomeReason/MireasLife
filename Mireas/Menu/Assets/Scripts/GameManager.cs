@@ -83,8 +83,9 @@ public class GameManager : MonoBehaviour
 
     void LoadNodesFromJSON()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("nodes");
-        NodesData nodesData = JsonUtility.FromJson<NodesData>(jsonFile.text);
+        //Path.Combine(Application.streamingAssetsPath, "GameJSON.json")
+        TextAsset GameJSON = Resources.Load<TextAsset>("GameJSON");
+        NodesData nodesData = JsonUtility.FromJson<NodesData>(GameJSON.text);
 
         foreach (NodeData nodeData in nodesData.nodes)
         {

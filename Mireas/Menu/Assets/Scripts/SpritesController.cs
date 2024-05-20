@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using System.IO;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using System.Xml.Linq;
+using UnityEditor;
 
 public class SpritesController : MonoBehaviour
 {
@@ -40,7 +43,12 @@ public class SpritesController : MonoBehaviour
     {
         if (sprites.Length > 0 && currentSpriteIndex < sprites.Length)
         {
-            if (File.Exists("Assets/Resources/" + sprites[currentSpriteIndex] + ".jpeg"))
+            //C:\Users\Алексей\Documents\GitHub\MireasLife\Mireas\Menu\Assets\StreamingAssets\1.jpeg
+            Debug.Log(Application.streamingAssetsPath);
+            //C:/Users/Алексей/Documents/GitHub/MireasLife/Mireas/Menu/Assets/StreamingAssets
+            string path = $"{Application.streamingAssetsPath}/{sprites[currentSpriteIndex]}.jpeg";
+            Debug.Log(File.Exists(path));
+            if (File.Exists(path))
             {
                 Texture2D texture = Resources.Load<Texture2D>(sprites[currentSpriteIndex]);
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
