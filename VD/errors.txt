@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/script.rpy", line 140: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    miraya "День ещё не закончился. Что мне следует посетить?"
+    ^
+
+Ren'Py Version: Ren'Py 8.3.4.24120703
+Sun Feb  2 21:24:56 2025
